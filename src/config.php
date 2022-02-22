@@ -1,6 +1,6 @@
 <?php
 session_start();
-$act = $_POST['action'];
+$act = $_REQUEST['action'];
 
 switch ($act) {
     case 'add':
@@ -10,7 +10,7 @@ switch ($act) {
         delete();
         break;
     default:
-        echo "add not click";
+        echo "deafult rum";
 
 }
 
@@ -44,6 +44,13 @@ function add()
 }
 function delete(){
 
+$idd= $_POST['id'];
+    foreach($_SESSION['tempSession'] as $key=>$val){
+        if($val['id']==$idd){
+            array_splice($_SESSION['tempSession'],$key,1);
+        }
+    }
+    echo json_encode(array('data' => $_SESSION['tempSession']));
 
 
 }
