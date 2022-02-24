@@ -9,9 +9,14 @@ switch ($act) {
     case 'del':
         delete();
         break;
+    case 'update':
+        update();
+        break;
+    case 'status':
+        changestatus();
+        break;
     default:
         echo "deafult rum";
-
 }
 
 
@@ -42,16 +47,41 @@ function add()
 
     echo json_encode(array('data' => $_SESSION['tempSession']));
 }
-function delete(){
+function delete()
+{
 
-$idd= $_POST['id'];
-    foreach($_SESSION['tempSession'] as $key=>$val){
-        if($val['id']==$idd){
-            array_splice($_SESSION['tempSession'],$key,1);
+    $idd = $_POST['id'];
+    //     echo $_POST['id'];
+    foreach ($_SESSION['tempSession'] as $key => $val) {
+        if ($val['id'] == $idd) {
+            array_splice($_SESSION['tempSession'], $key, 1);
+        }
+    }
+    echo json_encode(array('data' => $_SESSION['tempSession']));
+}
+
+function update()
+{
+    $id = $_POST['textid'];
+    $new_txt = $_POST['new_text'];
+    foreach ($_SESSION['tempSession'] as $key => $val) {
+        if ($val['text'] == $id) {
+             $_SESSION['tempSession'][$key]['text'] = $new_txt;
         }
     }
     echo json_encode(array('data' => $_SESSION['tempSession']));
 
+}
+
+function changestatus(){
+    $id=$_POST["id"];
+    foreach($_SESSION['tempSession'] as $key => $val){
+        if($val['id']==$id){
+            $_SESSION['tempSession'][$key]['status']=1;
+            
+        }
+    }
+    echo json_encode(array('data' => $_SESSION['tempSession']));
 
 }
 
